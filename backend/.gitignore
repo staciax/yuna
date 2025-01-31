@@ -1,0 +1,11 @@
+# dependencies
+/node_modules
+
+# build
+/dist
+*.bun-build
+server
+
+# misc
+.DS_Store
+.env

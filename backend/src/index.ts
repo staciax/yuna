@@ -1,0 +1,16 @@
+import { app } from '@/app';
+import { env } from '@/core/config';
+
+app.listen(
+    {
+        port: env.PORT,
+        hostname: env.HOSTNAME,
+    },
+    ({ hostname, port }) => {
+        const url = `${env.NODE_ENV !== 'production' ? 'http://' : 'https://'}${hostname}:${port}`;
+        console.log(`🦊 Elysia is running at ${url}`);
+        if (env.NODE_ENV === 'development') {
+            console.log(`🦊 API docs: ${url}/docs`);
+        }
+    },
+);
