@@ -34,7 +34,18 @@ if (env.NODE_ENV === 'development') {
     const blue = '\x1b[34m';
     const yellow = '\x1b[33m';
     const cyan = '\x1b[36m';
-    const { format } = await import('sql-formatter');
+
+    // NOTE: fix for docker build error
+    // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+    let format;
+    try {
+        const sql = await import('sql-formatter');
+        format = sql.format;
+    } catch {
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        format = (query: string, _cfg?: any) => query;
+    }
+
     // @ts-ignore
     prisma.$on('query', (e) => {
         console.log(
