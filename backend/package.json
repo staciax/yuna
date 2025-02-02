@@ -14,11 +14,11 @@
         "@elysiajs/static": "~1.2.0",
         "@elysiajs/swagger": "~1.2.0",
         "@prisma/client": "~6.3.0",
-        "elysia": "~1.2.10"
+        "elysia": "~1.2.11"
     },
     "devDependencies": {
         "@biomejs/biome": "~1.9.4",
-        "@types/bun": "^1.2.1",
+        "@types/bun": "^1.2.2",
         "prisma": "~6.3.0",
         "sql-formatter": "^15.4.10"
     },
