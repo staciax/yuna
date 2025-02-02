@@ -1,4 +1,4 @@
-name: Backend Lint
+name: Lint
 
 on:
   push:
@@ -13,10 +13,6 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +20,9 @@ jobs:
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
         with:
-          version: latest
+          version: "1.9.4"
+          working-dir: "backend"
       
       - name: Run Biome
         run: biome ci .
+        working-directory: backend
