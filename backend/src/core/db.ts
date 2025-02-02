@@ -1,5 +1,4 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import type * as runtime from '@prisma/client/runtime/library.js';
 
 import { env } from '@/core/config';
 
@@ -146,4 +145,3 @@ export const xprisma = prisma.$extends({
 });
 
 export type PrismaClientType = typeof prisma;
-export type Session = Omit<PrismaClientType, runtime.ITXClientDenyList>;
