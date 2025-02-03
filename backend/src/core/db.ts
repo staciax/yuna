@@ -50,7 +50,7 @@ if (env.NODE_ENV === 'development') {
     prisma.$on('query', (e) => {
         console.log(
             // @ts-ignore
-            `Query: \n${green} ${format(e.query, { language: 'mysql' })} ${reset}`,
+            `Query: \n${green} ${format(e.query, { language: 'postgresql' })} ${reset}`,
         );
         // @ts-ignore
         console.log(`Params: ${yellow}${e.params}${reset}`);
