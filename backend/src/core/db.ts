@@ -67,7 +67,7 @@ if (env.NODE_ENV === 'development') {
 // https://github.com/prisma/prisma-client-extensions/tree/main/callback-free-itx
 // https://github.com/prisma/prisma-client-extensions/pull/52
 
-type PrismaFlatTransactionClient = Prisma.TransactionClient & {
+export type PrismaFlatTransactionClient = Prisma.TransactionClient & {
     $commit: () => Promise<void>;
     $rollback: () => Promise<void>;
 };

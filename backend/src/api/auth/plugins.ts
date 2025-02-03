@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia';
 
+import { getUser } from '@/api/users/service';
 import { security } from '@/core/security';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
@@ -20,12 +21,7 @@ export const getCurrentUser = new Elysia({ name: 'current-user' })
 
         const userId = jwtPayload.sub;
 
-        const user = await tx.user.findUnique({
-            where: {
-                id: userId,
-                deletedAt: null,
-            },
-        });
+        const user = await getUser(tx, userId);
 
         if (!user) {
             throw new HTTPError({
@@ -41,7 +37,7 @@ export const getCurrentUser = new Elysia({ name: 'current-user' })
             });
         }
 
-        return { user };
+        return { currentUser: user };
     })
     // .macro({
     //     allowedRoles(roles: string[]) {

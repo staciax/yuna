@@ -3,6 +3,7 @@ import staticPlugin from '@elysiajs/static';
 import swagger from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
 
+import { router as apiRouter } from '@/api';
 import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 
@@ -30,7 +31,10 @@ export const app = new Elysia()
             prefix: '/public',
             staticLimit: 1024,
         }),
-    );
+    )
+
+    // API routes
+    .use(apiRouter({ prefix: env.API_V1_STR }));
 
 if (env.NODE_ENV !== 'production') {
     app.use(swagger({ path: '/docs' }));
