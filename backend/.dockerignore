@@ -1,0 +1,11 @@
+**/.dockerignore
+**/.env
+**/.env.example
+**/.gitignore
+**/.vscode
+**/docker-compose*
+**/Dockerfile*
+**/node_modules
+**/.DS_Store
+**/*.bun-build
+README.md
