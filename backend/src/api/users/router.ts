@@ -185,6 +185,9 @@ export const router = new Elysia({
                         currentUser.id,
                         body,
                     );
+
+                    await tx.$commit();
+
                     return updatedUser;
                 },
                 {
@@ -228,6 +231,8 @@ export const router = new Elysia({
                         hashedPassword,
                     });
 
+                    await tx.$commit();
+
                     return { message: 'User updated successfully' };
                 },
                 {
@@ -258,6 +263,8 @@ export const router = new Elysia({
                 email,
                 hashedPassword,
             });
+
+            await tx.$commit();
 
             set.status = 201;
             return { message: 'User created successfully' };
