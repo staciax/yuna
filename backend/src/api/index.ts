@@ -15,11 +15,11 @@ export const router = <T extends string>(config: { prefix: T }) =>
     })
         .guard({
             response: {
-                400: Message,
-                401: Message,
-                403: Message,
-                404: Message,
-                500: Message,
+                400: Message, // bad request
+                401: Message, // not authenticated
+                403: Message, // permission denied
+                404: Message, // not found
+                500: Message, // internal server error
             },
         })
         .use(usersRouter)
