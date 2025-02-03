@@ -14,6 +14,7 @@ export const router = <T extends string>(config: { prefix: T }) =>
         seed: config,
     })
         .guard({
+            // TODO: error message schema
             response: {
                 400: Message, // bad request
                 401: Message, // not authenticated
