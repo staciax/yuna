@@ -1,4 +1,10 @@
 {
+    // Editor settings
+    "workbench.editor.customLabels.patterns": {
+        "**/src/**/{schemas}/**/*.ts": "${dirname} - ${filename}.ts",
+        "**/src/api/**/*.ts": "${dirname} - ${filename}.ts"
+    },
+
     // BiomeJS
     "biome.lspBin": "./node_modules/@biomejs/biome/bin/biome",
 
