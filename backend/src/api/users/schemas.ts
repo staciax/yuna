@@ -19,12 +19,12 @@ export const UserPagination = Pagination(UserRead);
 
 export const UserCreate = t.Object({
     email: t.String({ format: 'email', maxLength: 320 }),
-    emailVerified: t.Optional(t.Boolean()),
+    // emailVerified: t.Optional(t.Boolean()),
     password: t.String({ minLength: 8, maxLength: 255 }),
     firstName: t.Optional(t.String({ minLength: 1, maxLength: 255 })),
     lastName: t.Optional(t.String({ minLength: 1, maxLength: 255 })),
     isActive: t.Optional(t.Boolean()),
-    role: t.Integer({ minimum: 0 }),
+    // role: t.Integer({ minimum: 0 }),
 });
 
 export const UserUpdate = t.Partial(UserCreate);
