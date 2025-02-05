@@ -13,13 +13,13 @@
         "@elysiajs/jwt": "~1.2.0",
         "@elysiajs/static": "~1.2.0",
         "@elysiajs/swagger": "~1.2.0",
-        "@prisma/client": "~6.3.0",
-        "elysia": "~1.2.11"
+        "@prisma/client": "~6.3.1",
+        "elysia": "~1.2.12"
     },
     "devDependencies": {
         "@biomejs/biome": "~1.9.4",
         "@types/bun": "~1.2.2",
-        "prisma": "~6.3.0",
+        "prisma": "^6.3.1",
         "sql-formatter": "^15.4.10"
     },
     "module": "src/index.ts"
