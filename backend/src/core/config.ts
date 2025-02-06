@@ -27,12 +27,6 @@ const envSchema = t.Object({
         default: 'localhost',
         description: 'API hostname',
     }),
-    PORT: t.Integer({
-        minimum: 1000,
-        maximum: 65535,
-        default: 8000,
-        description: 'API port',
-    }),
 
     // Security
     BACKEND_CORS_ORIGINS: t.Optional(

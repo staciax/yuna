@@ -6,7 +6,7 @@ registerUlidFormat();
 
 app.listen(
     {
-        port: env.PORT,
+        port: 8000,
         hostname: env.HOSTNAME,
     },
     ({ hostname, port }) => {
