@@ -1,22 +1,33 @@
-FROM oven/bun:1.2 AS base
+ARG BUN_VERSION=1.2.2
 
-# deps stage
+FROM oven/bun:${BUN_VERSION} AS base
+
+RUN apt-get update && apt-get install -y curl unzip
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs
+
 FROM base AS deps
 
 WORKDIR /app
+
 COPY package.json .
 COPY bun.lock .
-RUN bun install --frozen-lockfile --production
 
-# builder stage
+RUN bun install --production --frozen-lockfile
+
 FROM base AS builder
 
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
+
 COPY src src
 COPY package.json .
 COPY tsconfig.json .
+COPY prisma .
+
+RUN bunx prisma generate
 
 ENV NODE_ENV=production
 
@@ -29,14 +40,15 @@ RUN bun build \
     --outfile server \
     ./src/index.ts
 
-# runner stage
 FROM gcr.io/distroless/base:nonroot
 
 WORKDIR /app
 
+COPY --from=builder --chown=nonroot:nonroot /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
+COPY --from=builder --chown=nonroot:nonroot /app/src/generated ./src/generated
 COPY --from=builder --chown=nonroot:nonroot /app/server ./server
 
-# COPY --chown=nonroot:nonroot public public
+COPY --chown=nonroot:nonroot public public
 # COPY --chown=nonroot:nonroot protected protected
 # TODO: docker volumes for public ?
 
