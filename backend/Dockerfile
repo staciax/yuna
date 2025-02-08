@@ -42,7 +42,7 @@ FROM gcr.io/distroless/cc:nonroot
 WORKDIR /app
 
 # for basic healthchecks in the final image.
-COPY --from=busybox:stable /bin/wget /usr/bin/wget
+COPY --from=busybox:stable --chown=nonroot:nonroot /bin/wget /usr/bin/wget
 
 COPY --from=builder --chown=nonroot:nonroot /app/server ./server
 COPY --from=builder --chown=nonroot:nonroot /app/node_modules/.prisma /app/node_modules/.prisma
