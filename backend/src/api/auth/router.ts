@@ -27,13 +27,6 @@ export const router = new Elysia({
                 });
             }
 
-            if (!user.hashedPassword) {
-                throw new HTTPError({
-                    status: 400,
-                    message: 'User not set password.',
-                });
-            }
-
             const isPasswordMatch = await verifyPassword(
                 password,
                 user.hashedPassword,
@@ -43,6 +36,13 @@ export const router = new Elysia({
                 throw new HTTPError({
                     status: 400,
                     message: 'Invalid credentials.',
+                });
+            }
+
+            if (!user.isActive) {
+                throw new HTTPError({
+                    status: 400,
+                    message: 'Inactive user',
                 });
             }
 
