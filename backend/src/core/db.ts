@@ -30,11 +30,11 @@ export const prisma = new PrismaClient({
 // logging docs: https://www.prisma.io/docs/orm/prisma-client/observability-and-logging/logging
 
 if (env.NODE_ENV === 'development') {
-    const green = '\x1b[32m';
-    const reset = '\x1b[0m';
     const blue = '\x1b[34m';
-    const yellow = '\x1b[33m';
     const cyan = '\x1b[36m';
+    const green = '\x1b[32m';
+    const yellow = '\x1b[33m';
+    const reset = '\x1b[0m';
 
     // NOTE: fix for docker build error
     // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
