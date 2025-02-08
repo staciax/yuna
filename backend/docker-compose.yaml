@@ -1,0 +1,77 @@
+services:
+  db:
+    image: postgres:17.0
+    restart: always
+    platform: linux/amd64 # Patch for M1 Mac
+    networks:
+      - default
+    volumes:
+      - app-db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+      start_period: 30s
+
+  prestart:
+    build:
+      context: .
+      dockerfile: Dockerfile.prestart
+    platform: linux/amd64 # Patch for M1 Mac
+    networks:
+      - default
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+
+  backend:
+    image: "${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}"
+    build:
+      context: .
+    restart: always
+    platform: linux/amd64 # Patch for M1 Mac
+    networks:
+      - default
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - FRONTEND_HOST=${FRONTEND_HOST}
+      - HOSTNAME=${HOSTNAME}
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      - SECRET_KEY=${SECRET_KEY}
+      - ACCESS_TOKEN_EXPIRE=${ACCESS_TOKEN_EXPIRE}
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "8000:8000"
+      
+    healthcheck:
+      test: [ "CMD", "/usr/bin/wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health" ]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      prestart:
+        condition: service_completed_successfully
+
+networks:
+  default:
+
+volumes:
+  app-db-data:
