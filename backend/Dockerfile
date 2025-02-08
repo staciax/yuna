@@ -27,15 +27,7 @@ COPY package.json .
 COPY tsconfig.json .
 COPY prisma .
 
-# RUN bun install --production --frozen-lockfile
-# RUN bun install prisma --frozen-lockfile
-
-# COPY src src
-# COPY prisma prisma
-
 ENV NODE_ENV=production
-
-# RUN bun prisma generate
 
 # https://elysiajs.com/patterns/deployment.html#why-not-minify 
 RUN bun build \
@@ -47,17 +39,8 @@ RUN bun build \
     ./src/index.ts
 
 FROM gcr.io/distroless/cc:nonroot
-# FROM gcr.io/distroless/nodejs22-debian12:nonroot
 
 WORKDIR /app
-
-# COPY --from=builder --chown=nonroot:nonroot /usr/bin/wget /usr/bin/wget
-# COPY --from=builder --chown=nonroot:nonroot /usr/bin/curl /usr/bin/curl
-# COPY --from=busybox:stable /bin/curl /usr/bin/curl
-
-# COPY --from=builder --chown=nonroot:nonroot /usr/local/bin/node /usr/local/bin/node
-# COPY --from=builder --chown=nonroot:nonroot /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
-# COPY --from=builder --chown=nonroot:nonroot /app/src/generated ./src/generated
 
 # for basic healthchecks in the final image.
 COPY --from=busybox:stable /bin/wget /usr/bin/wget
