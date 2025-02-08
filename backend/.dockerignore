@@ -8,4 +8,5 @@
 **/node_modules
 **/.DS_Store
 **/*.bun-build
+server
 README.md
