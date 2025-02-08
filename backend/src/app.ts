@@ -2,12 +2,28 @@ import cors from '@elysiajs/cors';
 import staticPlugin from '@elysiajs/static';
 import swagger from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
+import logixlysia from 'logixlysia';
 
 import { router as apiRouter } from '@/api';
 import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 
 export const app = new Elysia()
+    .use(
+        logixlysia({
+            config: {
+                showStartupMessage: false,
+                timestamp: {
+                    translateTime: 'yyyy-mm-dd HH:MM:ss',
+                },
+                ip: true,
+                customLogFormat:
+                    '{now} {level} {duration} {method} {pathname} {status} {message} {ip}',
+            },
+        }),
+    )
+
+    .get('/health', () => true)
 
     // Error handlers
     .error({ HTTPError })
