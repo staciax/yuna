@@ -12,10 +12,6 @@ COPY bun.lock .
 RUN bun install --production --frozen-lockfile
 RUN bun install prisma --frozen-lockfile
 
-COPY prisma prisma
-
-RUN bun prisma generate
-
 FROM base AS builder
 
 WORKDIR /app
@@ -25,6 +21,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY src src
 COPY package.json .
 COPY tsconfig.json .
+COPY prisma prisma
+
+RUN bun prisma generate
 
 ENV NODE_ENV=production
 
