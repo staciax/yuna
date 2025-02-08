@@ -25,15 +25,14 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY src src
 COPY package.json .
 COPY tsconfig.json .
-COPY prisma .
 
 ENV NODE_ENV=production
 
 # https://elysiajs.com/patterns/deployment.html#why-not-minify 
 RUN bun build \
     --compile \
-	--minify-whitespace \
-	--minify-syntax \
+    --minify-whitespace \
+    --minify-syntax \
     --target bun \
     --outfile server \
     ./src/index.ts
