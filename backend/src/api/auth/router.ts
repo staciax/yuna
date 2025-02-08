@@ -1,9 +1,9 @@
-import * as userService from '@/api/users/service';
-import { security, verifyPassword } from '@/core/security';
+import { security } from '@/core/security';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
 
 import { UserLogin } from './schemas';
+import * as service from './service';
 
 import { Elysia } from 'elysia';
 
@@ -18,24 +18,12 @@ export const router = new Elysia({
         async ({ tx, body, jwt, cookie: { auth } }) => {
             const { username, password } = body;
 
-            const user = await userService.getUserByEmail(tx, username);
+            const user = await service.authenticate(tx, username, password);
 
             if (!user) {
                 throw new HTTPError({
                     status: 404,
                     message: 'Not found user',
-                });
-            }
-
-            const isPasswordMatch = await verifyPassword(
-                password,
-                user.hashedPassword,
-            );
-
-            if (!isPasswordMatch) {
-                throw new HTTPError({
-                    status: 400,
-                    message: 'Invalid credentials.',
                 });
             }
 
