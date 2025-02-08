@@ -37,6 +37,7 @@ RUN bun build \
     --outfile server \
     ./src/index.ts
 
+# use distroless/cc instead of distroless/base because prisma needs libgcc
 FROM gcr.io/distroless/cc:nonroot
 
 WORKDIR /app
