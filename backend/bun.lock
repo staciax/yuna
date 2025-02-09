@@ -17,7 +17,7 @@
         "@biomejs/biome": "~1.9.4",
         "@types/bun": "~1.2.2",
         "@types/nodemailer": "~6.4.17",
-        "prisma": "^6.3.1",
+        "prisma": "~6.3.1",
         "sql-formatter": "^15.4.10",
       },
     },
