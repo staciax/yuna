@@ -1,6 +1,12 @@
 {
     "name": "yuna-backend",
     "version": "0.0.1",
+    "description": "Yuna Backend",
+    "author": "STACiA <stacia.dev@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/staciax/yuna.git"
+    },
     "scripts": {
         "dev": "bun --watch src/index.ts",
         "start": "NODE_ENV=production bun src/index.ts",
