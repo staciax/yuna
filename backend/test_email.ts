@@ -45,7 +45,6 @@ export const env: Environment = Value.Parse(envSchema, process.env);
 const error = Value.Errors(envSchema, env);
 
 if (error.First()) {
-    7;
     console.error('Invalid environment variables, check the errors below!');
     console.error([...error]);
     process.exit(1);
