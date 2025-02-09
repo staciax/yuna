@@ -8,7 +8,7 @@ import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 import { logger } from '@/logging';
 
-export const app = new Elysia()
+export const app = new Elysia({ name: 'Yuuki' })
 
     .use(logger)
 
