@@ -27,6 +27,8 @@ services:
     platform: linux/amd64 # Patch for M1 Mac
     networks:
       - default
+    env_file:
+      - .env
     environment:
       - DATABASE_URL=${DATABASE_URL}
     depends_on:
