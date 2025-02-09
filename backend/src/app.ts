@@ -13,8 +13,6 @@ export const app = new Elysia({ name: 'Yuuki' })
     // NOTE: logger plugin should be the first one to catch all logs
     .use(logger)
 
-    .get('/health', () => true)
-
     // Error handlers
     .error({ HTTPError })
     .onError(({ code, error, set }) => {
@@ -37,10 +35,7 @@ export const app = new Elysia({ name: 'Yuuki' })
             prefix: '/public',
             staticLimit: 1024,
         }),
-    )
-
-    // API routes
-    .use(apiRouter({ prefix: env.API_V1_STR }));
+    );
 
 if (env.NODE_ENV !== 'production') {
     app.use(swagger({ path: '/docs' }));
@@ -56,5 +51,11 @@ if (env.BACKEND_CORS_ORIGINS) {
         }),
     );
 }
+
+// Health check
+app.get('/health', () => true);
+
+// API routes
+app.use(apiRouter({ prefix: env.API_V1_STR }));
 
 export type App = typeof app;
