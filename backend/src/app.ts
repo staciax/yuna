@@ -10,6 +10,7 @@ import { logger } from '@/logging';
 
 export const app = new Elysia({ name: 'Yuuki' })
 
+    // NOTE: logger plugin should be the first one to catch all logs
     .use(logger)
 
     .get('/health', () => true)
