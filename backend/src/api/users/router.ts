@@ -26,6 +26,8 @@ export const router = new Elysia({
     .use(dbSession)
     .guard((app) =>
         app
+            // TODO: role or permission verification
+            .use(getCurrentUser)
             .get(
                 '/',
                 async ({ tx, query: { limit, offset } }) => {
@@ -144,17 +146,28 @@ export const router = new Elysia({
             )
             .delete(
                 '/:id',
-                async ({ tx, params: { id } }) => {
-                    const user = await service.getUser(tx, id);
+                async ({ currentUser, tx, params: { id } }) => {
+                    const deleteUser = await service.getUser(tx, id);
 
-                    if (!user) {
+                    if (!deleteUser) {
                         throw new HTTPError({
                             status: 404,
                             message: 'User not found',
                         });
                     }
 
-                    await service.softDeleteUser(tx, user.id, user.email);
+                    if (deleteUser.id === currentUser.id) {
+                        throw new HTTPError({
+                            status: 403,
+                            message: "You can't delete yourself",
+                        });
+                    }
+
+                    await service.softDeleteUser(
+                        tx,
+                        deleteUser.id,
+                        deleteUser.email,
+                    );
                     await tx.$commit();
 
                     return { message: 'User deleted successfully' };
