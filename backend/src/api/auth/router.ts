@@ -1,6 +1,7 @@
 import { security } from '@/core/security';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
+import { Message } from '@/schemas/message';
 
 import { UserLogin } from './schemas';
 import * as service from './service';
@@ -48,5 +49,8 @@ export const router = new Elysia({
         },
         {
             body: UserLogin,
+            response: {
+                200: Message,
+            },
         },
     );
