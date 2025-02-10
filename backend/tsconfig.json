@@ -26,8 +26,8 @@
         "resolveJsonModule": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noUncheckedIndexedAccess": true,
-        // "isolatedModules": true,
+        // "noUncheckedIndexedAccess": true,
+        "isolatedModules": true,
 
         // Paths
         "paths": {
