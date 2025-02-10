@@ -7,11 +7,15 @@ import { router as apiRouter } from '@/api';
 import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 import { logger } from '@/logging';
+import { limiter } from '@/rate_limiter';
 
 export const app = new Elysia({ name: 'Yuuki' })
 
     // NOTE: logger plugin should be the first one to catch all logs
     .use(logger)
+
+    // Rate limiter
+    .use(limiter)
 
     // Error handlers
     .error({ HTTPError })
