@@ -27,6 +27,9 @@ export const getUsers = (
     options?: {
         skip?: number;
         take?: number;
+        orderBy?:
+            | Prisma.UserOrderByWithRelationInput
+            | Prisma.UserOrderByWithRelationInput[];
     },
 ) => {
     return tx.user.findMany({
@@ -35,6 +38,7 @@ export const getUsers = (
         },
         skip: options?.skip,
         take: options?.take,
+        orderBy: options?.orderBy,
     });
 };
 
