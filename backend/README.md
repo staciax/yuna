@@ -50,4 +50,5 @@ bun dev
 - [ ] [Supabase](https://supabase.com)
 - [ ] Edge ([Cloudflare Workers](https://workers.cloudflare.com), [Traefik](https://traefik.io))
 - [ ] Rate Limiting ([rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
+- [ ] Monorepo with ([Turbo](https://turbo.build/repo/docs)) 
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
