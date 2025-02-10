@@ -42,7 +42,17 @@ export const app = new Elysia({ name: 'Yuuki' })
     );
 
 if (env.NODE_ENV !== 'production') {
-    app.use(swagger({ path: '/docs' }));
+    app.use(
+        swagger({
+            path: '/docs',
+            documentation: {
+                info: {
+                    title: `${env.PROJECT_NAME} API`,
+                    version: '0.0.1',
+                },
+            },
+        }),
+    );
 }
 
 if (env.BACKEND_CORS_ORIGINS) {
