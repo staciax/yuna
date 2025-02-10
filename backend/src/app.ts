@@ -7,7 +7,7 @@ import { router as apiRouter } from '@/api';
 import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 import { logger } from '@/logging';
-import { limiter } from '@/rate_limiter';
+import { limiter } from '@/rate-limiter';
 
 export const app = new Elysia({ name: 'Yuuki' })
 
