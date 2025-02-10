@@ -49,4 +49,5 @@ bun dev
     - [ ] [Drizzle](https://orm.drizzle.team) ([Elysia Drizzle](https://elysiajs.com/recipe/drizzle.html#drizzle))
 - [ ] [Supabase](https://supabase.com)
 - [ ] Edge ([Cloudflare Workers](https://workers.cloudflare.com), [Traefik](https://traefik.io))
+- [ ] Rate Limiting ([rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
