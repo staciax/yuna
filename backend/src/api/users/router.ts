@@ -110,9 +110,9 @@ export const router = new Elysia({
             .patch(
                 '/:id',
                 async ({ tx, params: { id }, body }) => {
-                    const user = await service.getUser(tx, id);
+                    const updateUser = await service.getUser(tx, id);
 
-                    if (!user) {
+                    if (!updateUser) {
                         throw new HTTPError({
                             status: 404,
                             message: 'User not found',
@@ -126,10 +126,14 @@ export const router = new Elysia({
                         hashedPassword = await getPasswordHash(password);
                     }
 
-                    const updatedUser = await service.updateUser(tx, user.id, {
-                        ...data,
-                        hashedPassword,
-                    });
+                    const updatedUser = await service.updateUser(
+                        tx,
+                        updateUser,
+                        {
+                            ...data,
+                            hashedPassword,
+                        },
+                    );
 
                     await tx.$commit();
                     return updatedUser;
@@ -163,11 +167,7 @@ export const router = new Elysia({
                         });
                     }
 
-                    await service.softDeleteUser(
-                        tx,
-                        deleteUser.id,
-                        deleteUser.email,
-                    );
+                    await service.softDeleteUser(tx, deleteUser);
                     await tx.$commit();
 
                     return { message: 'User deleted successfully' };
@@ -195,7 +195,7 @@ export const router = new Elysia({
                 async ({ tx, currentUser, body }) => {
                     const updatedUser = await service.updateUser(
                         tx,
-                        currentUser.id,
+                        currentUser,
                         body,
                     );
 
@@ -240,7 +240,7 @@ export const router = new Elysia({
                     }
 
                     const hashedPassword = await getPasswordHash(newPassword);
-                    await service.updateUser(tx, currentUser.id, {
+                    await service.updateUser(tx, currentUser, {
                         hashedPassword,
                     });
 

@@ -59,12 +59,12 @@ export const createUser = async (
 
 export const updateUser = (
     tx: PrismaFlatTransactionClient,
-    id: string,
+    user: { id: string },
     data: Prisma.UserUpdateInput,
 ) => {
     return tx.user.update({
         where: {
-            id: id,
+            id: user.id,
             deletedAt: null,
         },
         data,
@@ -73,16 +73,15 @@ export const updateUser = (
 
 export const softDeleteUser = (
     tx: PrismaFlatTransactionClient,
-    id: string,
-    email: string,
+    user: { id: string; email: string },
 ) => {
     return tx.user.update({
         where: {
-            id: id,
+            id: user.id,
             deletedAt: null,
         },
         data: {
-            email: `${email}-${id}-deleted`, // ensure unique
+            email: `${user.email}-${user.id}-deleted`, // ensure unique
             deletedAt: new Date(),
         },
     });
