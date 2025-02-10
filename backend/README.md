@@ -32,10 +32,12 @@ bun dev
 - [x] [Environment Variables Validation](./src/core/config.ts)
 - [ ] Static files
     - [ ] [Elysia Static](https://elysiajs.com/plugins/static.html)
-    - [ ] S3 storage ([AWS S3](https://aws.amazon.com/s3/), [Cloudflare R2](https://developers.cloudflare.com/r2/)) with [Bun](https://bun.sh/docs/api/s3)
+    - [ ] S3 storage with [Bun S3](https://bun.sh/docs/api/s3)
+        - [ ] [AWS S3](https://aws.amazon.com/s3/)
+        - [ ] [Cloudflare R2](https://developers.cloudflare.com/r2/)
 - [ ] [React Email](https://github.com/resend/react-email) with [Nodemailer](https://www.nodemailer.com) ([Elysia Email](https://elysiajs.com/recipe/react-email.html))
 - [x] [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose) ([Elysia Docker](https://elysiajs.com/recipe/docker.html))
-- [ ] [Unit Test](https://elysiajs.com/patterns/unit-test) and coverage with [Bun](https://bun.sh/docs/test/coverage)
+- [ ] [Unit Test](https://elysiajs.com/patterns/unit-test) and coverage with [Bun Code coverage](https://bun.sh/docs/test/coverage)
 - [ ] [Redis](https://redis.io)
 - [ ] [Opentelemetry](https://opentelemetry.io) ([Elysia OpenTelemetry](https://elysiajs.com/recipe/opentelemetry.html))
 - [ ] [Sentry](https://sentry.io)
@@ -48,7 +50,9 @@ bun dev
     - [X] [Prisma](https://www.prisma.io) ([Elysia Prisma](https://elysiajs.com/blog/with-prisma))
     - [ ] [Drizzle](https://orm.drizzle.team) ([Elysia Drizzle](https://elysiajs.com/recipe/drizzle.html#drizzle))
 - [ ] [Supabase](https://supabase.com)
-- [ ] Edge ([Cloudflare Workers](https://workers.cloudflare.com), [Traefik](https://traefik.io))
-- [ ] Rate Limiting ([rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
-- [ ] Monorepo with ([Turbo](https://turbo.build/repo/docs)) 
+- [ ] Edge
+    - [ ] [Cloudflare Workers](https://workers.cloudflare.com)
+    - [ ] [Traefik](https://traefik.io)
+- [ ] Rate Limiting (maybe: [rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
+- [ ] Monorepo with [Turbo](https://turbo.build/repo/docs)
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
