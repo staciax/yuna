@@ -67,7 +67,7 @@ if (env.BACKEND_CORS_ORIGINS) {
 }
 
 // Health check
-app.get('/health', () => true);
+app.get('/health', true, { detail: { hide: true } });
 
 // API routes
 app.use(apiRouter({ prefix: env.API_V1_STR }));
