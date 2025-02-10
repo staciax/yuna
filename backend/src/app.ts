@@ -47,7 +47,7 @@ if (env.NODE_ENV !== 'production') {
             path: '/docs',
             documentation: {
                 info: {
-                    title: `${env.PROJECT_NAME} API`,
+                    title: env.PROJECT_NAME,
                     version: '0.0.1',
                 },
             },
