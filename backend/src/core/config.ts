@@ -77,6 +77,44 @@ const envSchema = t.Object({
     // POSTGRES_DB: t.String({
     //     description: 'Postgres database',
     // }),
+
+    // Email
+    SMTP_TLS: t.Boolean({
+        default: true,
+        description: 'Enable TLS for SMTP',
+    }),
+    SMTP_SSL: t.Boolean({
+        default: false,
+        description: 'Enable SSL for SMTP',
+    }),
+    SMTP_HOST: t.String({
+        description: 'SMTP host',
+    }),
+    SMTP_PORT: t.Integer({
+        default: 587,
+        description: 'SMTP port',
+    }),
+    SMTP_USER: t.String({
+        description: 'SMTP user',
+    }),
+    SMTP_PASSWORD: t.String({
+        description: 'SMTP password',
+    }),
+    EMAILS_FROM_EMAIL: t.Optional(
+        t.String({
+            format: 'email',
+            description: 'Emails from email',
+        }),
+    ),
+    EMAILS_FROM_NAME: t.Optional(
+        t.String({
+            description: 'Emails from name',
+        }),
+    ),
+    EMAIL_RESET_TOKEN_EXPIRE_HOURS: t.Integer({
+        default: 24,
+        description: 'Email reset token expiration time in hours',
+    }),
 });
 
 export type Environment = typeof envSchema.static;
@@ -90,3 +128,13 @@ if (error.First()) {
     console.error([...error]);
     process.exit(1);
 }
+
+if (env.SMTP_SSL && env.SMTP_TLS) {
+    console.error(
+        'SMTP_SSL and SMTP_TLS cannot be enabled at the same time,',
+        'please enable only one of them',
+    );
+    process.exit(1);
+}
+
+export const EMAIL_ENABLED = Boolean(env.SMTP_HOST && env.EMAILS_FROM_EMAIL);
