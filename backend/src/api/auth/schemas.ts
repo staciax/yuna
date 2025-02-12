@@ -10,3 +10,8 @@ export const UserLogin = t.Object({
         maxLength: 255,
     }),
 });
+
+export const NewPassword = t.Object({
+    token: t.String(),
+    newPassword: t.String({ minLength: 8, maxLength: 255 }),
+});
