@@ -21,6 +21,7 @@
         "@elysiajs/static": "~1.2.0",
         "@elysiajs/swagger": "~1.2.0",
         "@prisma/client": "~6.3.1",
+        "@react-email/components": "0.0.33",
         "elysia": "~1.2.13",
         "@react-email/components": "0.0.33",
         "logixlysia": "~4.1.1",
