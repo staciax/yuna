@@ -24,7 +24,7 @@ type Props = {
     link: string;
 };
 
-export default function VerifyEmail(props: Props) {
+export default function VerifyEmail({ projectName, email, link }: Props) {
     return (
         <Html>
             <Head />
@@ -32,9 +32,9 @@ export default function VerifyEmail(props: Props) {
             <Tailwind>
                 <Body>
                     <Section>
-                        <Text>Project Name: {props.projectName}</Text>
-                        <Text>Email: {props.email}</Text>
-                        <Text>Link: {props.link}</Text>
+                        <Text>Project Name: {projectName}</Text>
+                        <Text>Email: {email}</Text>
+                        <Text>Link: {link}</Text>
                     </Section>
                 </Body>
             </Tailwind>
