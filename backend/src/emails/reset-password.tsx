@@ -42,7 +42,7 @@ export default function ResetPassword({ projectName, email, link }: Props) {
 }
 
 ResetPassword.PreviewProps = {
-    email: 'test@gmail.com',
-    link: 'test',
     projectName: 'test',
+    email: 'test@gmail.com',
+    link: 'http://localhost:3000/reset-password?token=token',
 };
