@@ -1,11 +1,12 @@
-import nodemailer from 'nodemailer';
-
 import { EMAIL_ENABLED, env } from '@/core/config';
 import ResetPassword from '@/emails/reset-password';
+import VerifyEmail from '@/emails/verify-email';
+
+import nodemailer from 'nodemailer';
+// biome-ignore lint/correctness/noUnusedImports: allow react import
+import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import * as React from 'react';
-import VerifyEmail from './emails/verify-email';
 
 // https://www.nodemailer.com/smtp/
 // https://github.com/nodemailer/nodemailer
