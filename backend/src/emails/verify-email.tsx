@@ -43,7 +43,7 @@ export default function VerifyEmail({ projectName, email, link }: Props) {
 }
 
 VerifyEmail.PreviewProps = {
-    email: 'test@gmail.com',
-    link: 'test',
     projectName: 'test',
+    email: 'test@gmail.com',
+    link: 'http://localhost:3000/verify-email?token=token',
 };
