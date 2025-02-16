@@ -62,7 +62,7 @@ services:
       test:
         [
           "CMD",
-          "/usr/bin/wget",
+          "wget",
           "--no-verbose",
           "--tries=1",
           "--spider",

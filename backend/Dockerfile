@@ -53,6 +53,8 @@ COPY --chown=nonroot:nonroot public public
 
 ENV NODE_ENV=production
 
+ENV PATH=/bin/wget:$PATH
+
 CMD ["./server"]
 
 EXPOSE 8000
