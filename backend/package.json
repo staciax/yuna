@@ -21,6 +21,7 @@
         "@elysiajs/static": "~1.2.0",
         "@elysiajs/swagger": "~1.2.0",
         "@prisma/client": "~6.3.1",
+        "@react-email/components": "0.0.33",
         "elysia": "~1.2.13",
         "logixlysia": "~4.1.1",
         "nodemailer": "~6.10.0",
@@ -36,6 +37,9 @@
         "prisma": "~6.3.1",
         "react-email": "3.0.7",
         "sql-formatter": "^15.4.10"
+    },
+    "overrides": {
+        "jose": "~5.9.6"
     },
     "module": "src/index.ts"
 }
