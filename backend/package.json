@@ -31,5 +31,8 @@
         "prisma": "~6.3.1",
         "sql-formatter": "^15.4.10"
     },
+    "overrides": {
+        "jose": "~5.9.6"
+    },
     "module": "src/index.ts"
 }
