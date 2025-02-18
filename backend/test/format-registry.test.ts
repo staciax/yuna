@@ -1,33 +1,28 @@
 import { describe, expect, it } from 'bun:test';
-import { app } from '@/app';
 import { registerUlidFormat } from '@/format-registry';
 
-import { t } from 'elysia';
+import { Elysia, t } from 'elysia';
 import { ulid } from 'ulid';
+import { get } from './utils';
 
 registerUlidFormat();
 
-app.get('/ulid/:id', ({ params: { id } }) => id, {
-    params: t.Object({ id: t.String({ format: 'ulid' }) }),
-});
+describe('FormatRegistry', () => {
+    it('Format uild', async () => {
+        const testId = ulid();
 
-describe('Elysia', () => {
-    it('should validate', async () => {
-        const id = ulid();
+        const app = new Elysia().get('/', ({ query }) => query, {
+            query: t.Object({
+                ulid: t.String({
+                    format: 'ulid',
+                }),
+            }),
+        });
 
-        const response = await app.handle(
-            new Request(`http://localhost/ulid/${id}`),
-        );
-        const data = await response.text();
+        const response = await app.handle(get(`/?ulid=${testId}`));
+        expect(response.status).toBe(200);
 
-        expect(data).toBe(id);
-    });
-    it('should not validate', async () => {
-        const id = '1234567890';
-
-        const response = await app.handle(
-            new Request(`http://localhost/ulid/${id}`),
-        );
-        expect(response.status).toBe(422);
+        const data = await response.json();
+        expect(data).toEqual({ ulid: testId });
     });
 });
