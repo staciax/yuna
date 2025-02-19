@@ -74,5 +74,25 @@
         "formatter": {
             "trailingCommas": "none"
         }
-    }
+    },
+    "overrides": [
+        {
+            // for react + tailwindcss
+            "include": ["*.tsx"],
+            "linter": {
+                "rules": {
+                    "nursery": {
+                        "useSortedClasses": {
+                            "level": "warn",
+                            "fix": "safe",
+                            "options": {
+                                "attributes": ["className"],
+                                "functions": ["cn"]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
 }
