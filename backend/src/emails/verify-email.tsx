@@ -40,7 +40,7 @@ export default function VerifyEmail({ projectName, email, link }: Props) {
                                 alt="Logo"
                                 className="my-0 mx-auto"
                             /> */}
-                            <Text className="font-bold text-[24px] text-black">
+                            <Text className="text-center font-bold text-[24px] text-black">
                                 {projectName}
                             </Text>
                         </Section>
