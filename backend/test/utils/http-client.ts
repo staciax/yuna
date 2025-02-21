@@ -34,7 +34,7 @@ class BaseClient {
     }
 }
 
-class Client extends BaseClient {
+export class Client extends BaseClient {
     get(path: string, options?: RequestInit) {
         return this.request('GET', path, options);
     }
