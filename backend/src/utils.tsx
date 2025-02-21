@@ -7,7 +7,6 @@ import nodemailer from 'nodemailer';
 import * as React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-
 // https://www.nodemailer.com/smtp/
 // https://github.com/nodemailer/nodemailer
 
