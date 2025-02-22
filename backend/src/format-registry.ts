@@ -4,5 +4,6 @@ import { FormatRegistry } from '@sinclair/typebox';
 const ulidRegex = /^[0-9A-HJKMNP-TV-Z]{26}$/i;
 
 export const registerUlidFormat = () => {
-    FormatRegistry.Set('ulid', (value) => ulidRegex.test(value));
+    if (!FormatRegistry.Has('ulid'))
+        FormatRegistry.Set('ulid', (value) => ulidRegex.test(value));
 };
