@@ -3,15 +3,14 @@ import staticPlugin from '@elysiajs/static';
 import swagger from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
 
-import { router as apiRouter } from '@/api';
+import { apiRouter } from '@/api';
 import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
+import { registerUlidFormat } from '@/format-registry';
 import { logger } from '@/logging';
 import { limiter } from '@/rate-limiter';
-import { registerUlidFormat } from '@/format-registry';
 
 registerUlidFormat();
-
 
 export const app = new Elysia({ name: 'Yuuki' })
 

@@ -7,7 +7,7 @@ import { Elysia } from 'elysia';
 
 // https://elysiajs.com/essential/plugin.html#plugin-deduplication
 
-export const router = <T extends string>(config: { prefix: T }) =>
+export const apiRouter = <T extends string>(config: { prefix: T }) =>
     new Elysia({
         prefix: config.prefix,
         name: `${config.prefix.replace('/', '-')}`,
