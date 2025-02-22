@@ -3,7 +3,7 @@ import { registerUlidFormat } from '@/format-registry';
 
 import { Elysia, t } from 'elysia';
 import { ulid } from 'ulid';
-import { get } from './utils';
+import { get } from './utils/utils';
 
 registerUlidFormat();
 
