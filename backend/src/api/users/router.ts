@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia';
 
 import { getCurrentUser } from '@/api/auth/plugins';
+import { EMAIL_ENABLED } from '@/core/config';
 import { getPasswordHash, security, verifyPassword } from '@/core/security';
 import { Status } from '@/enums';
 import { HTTPError } from '@/errors';
@@ -99,16 +100,18 @@ export const router = new Elysia({
                         hashedPassword,
                     });
 
-                    const verifyEmailToken = await jwt.sign({
-                        sub: body.email,
-                    });
-                    const html = generateAccountVerificationEmail(
-                        body.email,
-                        verifyEmailToken,
-                    );
-                    setTimeout(async () => {
-                        await sendEmail(html);
-                    }, 1000);
+                    if (EMAIL_ENABLED && data.email) {
+                        const verifyEmailToken = await jwt.sign({
+                            sub: data.email,
+                        });
+                        const emailData = generateAccountVerificationEmail(
+                            data.email,
+                            verifyEmailToken,
+                        );
+                        setTimeout(async () => {
+                            await sendEmail(emailData);
+                        }, 1000);
+                    }
 
                     set.status = Status.HTTP_201_CREATED;
                     return newUser;
@@ -284,16 +287,18 @@ export const router = new Elysia({
                 hashedPassword,
             });
 
-            const verifyEmailToken = await jwt.sign({
-                sub: email,
-            });
-            const html = generateAccountVerificationEmail(
-                email,
-                verifyEmailToken,
-            );
-            setTimeout(async () => {
-                await sendEmail(html);
-            }, 1000);
+            if (EMAIL_ENABLED && email) {
+                const verifyEmailToken = await jwt.sign({
+                    sub: email,
+                });
+                const emailData = generateAccountVerificationEmail(
+                    email,
+                    verifyEmailToken,
+                );
+                setTimeout(async () => {
+                    await sendEmail(emailData);
+                }, 1000);
+            }
 
             set.status = Status.HTTP_201_CREATED;
             return { message: 'User created successfully' };
