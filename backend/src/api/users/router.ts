@@ -98,8 +98,6 @@ export const router = new Elysia({
                         hashedPassword,
                     });
 
-                    await tx.$commit();
-
                     const verifyEmailToken = await jwt.sign({
                         sub: body.email,
                     });
@@ -149,7 +147,6 @@ export const router = new Elysia({
                         },
                     );
 
-                    await tx.$commit();
                     return updatedUser;
                 },
                 {
@@ -182,7 +179,6 @@ export const router = new Elysia({
                     }
 
                     await service.softDeleteUser(tx, deleteUser);
-                    await tx.$commit();
 
                     return { message: 'User deleted successfully' };
                 },
@@ -212,8 +208,6 @@ export const router = new Elysia({
                         currentUser,
                         body,
                     );
-
-                    await tx.$commit();
 
                     return updatedUser;
                 },
@@ -257,8 +251,6 @@ export const router = new Elysia({
                     await service.updateUser(tx, currentUser, {
                         hashedPassword,
                     });
-
-                    await tx.$commit();
 
                     return { message: 'User updated successfully' };
                 },
@@ -340,8 +332,6 @@ export const router = new Elysia({
             await service.updateUser(tx, user, {
                 isActive: true,
             });
-
-            await tx.$commit();
 
             return {
                 message: 'Verified email successfully',

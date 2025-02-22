@@ -136,8 +136,6 @@ export const router = new Elysia({
                 hashedPassword: hashedPassword,
             });
 
-            await tx.$commit();
-
             return {
                 message: 'Password updated successfully',
             };

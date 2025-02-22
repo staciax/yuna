@@ -54,32 +54,36 @@ export const createUser = async (
     tx: PrismaFlatTransactionClient,
     data: Prisma.UserCreateInput,
 ) => {
-    return tx.user.create({
+    const dbUser = await tx.user.create({
         data: {
             ...data,
         },
     });
+    await tx.$commit();
+    return dbUser;
 };
 
-export const updateUser = (
+export const updateUser = async (
     tx: PrismaFlatTransactionClient,
     user: { id: string },
     data: Prisma.UserUpdateInput,
 ) => {
-    return tx.user.update({
+    const dbUser = await tx.user.update({
         where: {
             id: user.id,
             deletedAt: null,
         },
         data,
     });
+    await tx.$commit();
+    return dbUser;
 };
 
-export const softDeleteUser = (
+export const softDeleteUser = async (
     tx: PrismaFlatTransactionClient,
     user: { id: string; email: string },
 ) => {
-    return tx.user.update({
+    const dbUser = await tx.user.update({
         where: {
             id: user.id,
             deletedAt: null,
@@ -89,4 +93,6 @@ export const softDeleteUser = (
             deletedAt: new Date(),
         },
     });
+    await tx.$commit();
+    return dbUser;
 };
