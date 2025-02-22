@@ -1,5 +1,6 @@
 // https://elysiajs.com/patterns/unit-test
 import { describe, expect, it } from 'bun:test';
+
 import { client } from './client';
 
 describe('Elysia', () => {

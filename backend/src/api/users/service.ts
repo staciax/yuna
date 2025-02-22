@@ -1,5 +1,6 @@
-import type { PrismaFlatTransactionClient } from '@/core/db';
 import type { Prisma } from '@prisma/client';
+
+import type { PrismaFlatTransactionClient } from '@/core/db';
 
 export const getUserByEmail = (
     tx: PrismaFlatTransactionClient,

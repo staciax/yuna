@@ -1,3 +1,5 @@
+import { Elysia, t } from 'elysia';
+
 import { getCurrentUser } from '@/api/auth/plugins';
 import { getPasswordHash, security, verifyPassword } from '@/core/security';
 import { Status } from '@/enums';
@@ -5,6 +7,7 @@ import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
 import { Message } from '@/schemas/message';
 import { OffsetBasedPagination } from '@/schemas/pagination';
+import { generateAccountVerificationEmail, sendEmail } from '@/utils';
 
 import {
     UpdatePassword,
@@ -17,9 +20,6 @@ import {
     UserUpdate,
 } from './schemas';
 import * as service from './service';
-
-import { generateAccountVerificationEmail, sendEmail } from '@/utils';
-import { Elysia, t } from 'elysia';
 
 export const router = new Elysia({
     prefix: '/users',

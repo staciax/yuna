@@ -1,5 +1,6 @@
-import { Pagination } from '@/schemas/pagination';
 import { t } from 'elysia';
+
+import { Pagination } from '@/schemas/pagination';
 
 export const UserRead = t.Object({
     id: t.String({ format: 'uuid' }),

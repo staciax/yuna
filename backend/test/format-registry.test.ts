@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'bun:test';
-import { registerUlidFormat } from '@/format-registry';
 
 import { Elysia, t } from 'elysia';
 import { ulid } from 'ulid';
+
+import { registerUlidFormat } from '@/format-registry';
+
 import { get } from './utils/utils';
 
 registerUlidFormat();

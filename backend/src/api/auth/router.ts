@@ -1,3 +1,5 @@
+import { Elysia, t } from 'elysia';
+
 import * as userService from '@/api/users/service';
 import { getPasswordHash, security } from '@/core/security';
 import { Status } from '@/enums';
@@ -8,8 +10,6 @@ import { generateResetPasswordEmail, sendEmail } from '@/utils';
 
 import { NewPassword, UserLogin } from './schemas';
 import * as service from './service';
-
-import { Elysia, t } from 'elysia';
 
 export const router = new Elysia({
     prefix: '/auth',
