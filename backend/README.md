@@ -54,5 +54,6 @@ bun dev
     - [ ] [Cloudflare Workers](https://workers.cloudflare.com)
     - [ ] [Traefik](https://traefik.io)
 - [ ] Rate Limiting (maybe: [rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
-- [ ] Monorepo with [Turbo](https://turbo.build/repo/docs)
+<!-- - [ ] Monorepo with [Turbo](https://turbo.build/repo/docs) -->
+- [ ] Microservices
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
