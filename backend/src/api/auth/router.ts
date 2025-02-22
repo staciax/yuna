@@ -1,5 +1,6 @@
 import * as userService from '@/api/users/service';
 import { getPasswordHash, security } from '@/core/security';
+import { Status } from '@/enums';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
 import { Message } from '@/schemas/message';
@@ -25,14 +26,14 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    status: 404,
                     message: 'Not found user',
+                    status: Status.HTTP_400_BAD_REQUEST,
                 });
             }
 
             if (!user.isActive) {
                 throw new HTTPError({
-                    status: 400,
+                    status: Status.HTTP_400_BAD_REQUEST,
                     message: 'Inactive user',
                 });
             }
@@ -52,7 +53,7 @@ export const router = new Elysia({
         {
             body: UserLogin,
             response: {
-                200: Message,
+                [Status.HTTP_200_OK]: Message,
             },
         },
     )
@@ -63,8 +64,8 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    status: 400,
                     message: 'User not found',
+                    status: Status.HTTP_404_NOT_FOUND,
                 });
             }
 
@@ -96,7 +97,7 @@ export const router = new Elysia({
                 email: t.String({ format: 'email' }),
             }),
             response: {
-                200: Message,
+                [Status.HTTP_200_OK]: Message,
             },
         },
     )
@@ -107,7 +108,7 @@ export const router = new Elysia({
 
             if (!tokenIsValid) {
                 throw new HTTPError({
-                    status: 400,
+                    status: Status.HTTP_400_BAD_REQUEST,
                     message: 'Invalid token',
                 });
             }
@@ -118,14 +119,14 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    status: 404,
                     message: 'User not found',
+                    status: Status.HTTP_404_NOT_FOUND,
                 });
             }
 
             if (!user.isActive) {
                 throw new HTTPError({
-                    status: 404,
+                    status: Status.HTTP_400_BAD_REQUEST,
                     message: 'Inactive user',
                 });
             }
@@ -143,7 +144,7 @@ export const router = new Elysia({
         {
             body: NewPassword,
             response: {
-                200: Message,
+                [Status.HTTP_200_OK]: Message,
             },
         },
     );

@@ -1,5 +1,6 @@
 import { getCurrentUser } from '@/api/auth/plugins';
 import { getPasswordHash, security, verifyPassword } from '@/core/security';
+import { Status } from '@/enums';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
 import { Message } from '@/schemas/message';
@@ -51,7 +52,7 @@ export const router = new Elysia({
                 {
                     query: OffsetBasedPagination,
                     response: {
-                        200: UserPagination,
+                        [Status.HTTP_200_OK]: UserPagination,
                     },
                 },
             )
@@ -62,7 +63,7 @@ export const router = new Elysia({
 
                     if (!user) {
                         throw new HTTPError({
-                            status: 404,
+                            status: Status.HTTP_404_NOT_FOUND,
                             message: 'User not found',
                         });
                     }
@@ -74,7 +75,7 @@ export const router = new Elysia({
                         id: t.String({ format: 'uuid' }),
                     }),
                     response: {
-                        200: UserRead,
+                        [Status.HTTP_200_OK]: UserRead,
                     },
                 },
             )
@@ -85,7 +86,7 @@ export const router = new Elysia({
 
                     if (user) {
                         throw new HTTPError({
-                            status: 400,
+                            status: Status.HTTP_400_BAD_REQUEST,
                             message: 'Email already exists',
                         });
                     }
@@ -109,13 +110,13 @@ export const router = new Elysia({
                         await sendEmail(html);
                     }, 1000);
 
-                    set.status = 201;
+                    set.status = Status.HTTP_201_CREATED;
                     return newUser;
                 },
                 {
                     body: UserCreate,
                     response: {
-                        201: UserRead,
+                        [Status.HTTP_201_CREATED]: UserRead,
                     },
                 },
             )
@@ -126,7 +127,7 @@ export const router = new Elysia({
 
                     if (!updateUser) {
                         throw new HTTPError({
-                            status: 404,
+                            status: Status.HTTP_404_NOT_FOUND,
                             message: 'User not found',
                         });
                     }
@@ -155,7 +156,7 @@ export const router = new Elysia({
                     }),
                     body: UserUpdate,
                     response: {
-                        200: UserRead,
+                        [Status.HTTP_200_OK]: UserRead,
                     },
                 },
             )
@@ -166,14 +167,14 @@ export const router = new Elysia({
 
                     if (!deleteUser) {
                         throw new HTTPError({
-                            status: 404,
+                            status: Status.HTTP_404_NOT_FOUND,
                             message: 'User not found',
                         });
                     }
 
                     if (deleteUser.id === currentUser.id) {
                         throw new HTTPError({
-                            status: 403,
+                            status: Status.HTTP_403_FORBIDDEN,
                             message: "You can't delete yourself",
                         });
                     }
@@ -187,7 +188,7 @@ export const router = new Elysia({
                         id: t.String({ format: 'uuid' }),
                     }),
                     response: {
-                        200: Message,
+                        [Status.HTTP_200_OK]: Message,
                     },
                 },
             ),
@@ -214,7 +215,7 @@ export const router = new Elysia({
                 {
                     body: UserMeUpdate,
                     response: {
-                        200: UserMeRead,
+                        [Status.HTTP_200_OK]: UserMeRead,
                     },
                 },
             )
@@ -223,7 +224,7 @@ export const router = new Elysia({
                 async ({ tx, currentUser, body }) => {
                     if (!currentUser.hashedPassword) {
                         throw new HTTPError({
-                            status: 400,
+                            status: Status.HTTP_400_BAD_REQUEST,
                             message: 'User has no password',
                         });
                     }
@@ -235,14 +236,14 @@ export const router = new Elysia({
                     );
                     if (!passwordIsMatch) {
                         throw new HTTPError({
-                            status: 400,
+                            status: Status.HTTP_400_BAD_REQUEST,
                             message: 'Invalid password',
                         });
                     }
 
                     if (currentPassword === newPassword) {
                         throw new HTTPError({
-                            status: 400,
+                            status: Status.HTTP_400_BAD_REQUEST,
                             message: 'New password must be different',
                         });
                     }
@@ -257,7 +258,7 @@ export const router = new Elysia({
                 {
                     body: UpdatePassword,
                     response: {
-                        200: Message,
+                        [Status.HTTP_200_OK]: Message,
                     },
                 },
             ),
@@ -271,7 +272,7 @@ export const router = new Elysia({
 
             if (user) {
                 throw new HTTPError({
-                    status: 400,
+                    status: Status.HTTP_400_BAD_REQUEST,
                     message: 'User already exists',
                 });
             }
@@ -282,8 +283,6 @@ export const router = new Elysia({
                 email,
                 hashedPassword,
             });
-
-            await tx.$commit();
 
             const verifyEmailToken = await jwt.sign({
                 sub: email,
@@ -296,13 +295,13 @@ export const router = new Elysia({
                 await sendEmail(html);
             }, 1000);
 
-            set.status = 201;
+            set.status = Status.HTTP_201_CREATED;
             return { message: 'User created successfully' };
         },
         {
             body: UserRegiser,
             response: {
-                201: Message,
+                [Status.HTTP_201_CREATED]: Message,
             },
         },
     )
@@ -313,7 +312,7 @@ export const router = new Elysia({
 
             if (!tokenIsValid) {
                 throw new HTTPError({
-                    status: 400,
+                    status: Status.HTTP_400_BAD_REQUEST,
                     message: 'Token is invalid',
                 });
             }
@@ -324,7 +323,7 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    status: 404,
+                    status: Status.HTTP_404_NOT_FOUND,
                     message: 'User not found',
                 });
             }
@@ -339,7 +338,7 @@ export const router = new Elysia({
         },
         {
             response: {
-                200: Message,
+                [Status.HTTP_200_OK]: Message,
             },
             body: t.Object({
                 token: t.String(),
