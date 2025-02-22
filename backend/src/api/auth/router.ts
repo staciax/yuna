@@ -26,8 +26,8 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    message: 'Not found user',
                     status: Status.HTTP_400_BAD_REQUEST,
+                    message: 'Incorrect email or password',
                 });
             }
 
@@ -64,17 +64,19 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    message: 'User not found',
                     status: Status.HTTP_404_NOT_FOUND,
+                    message:
+                        'The user with this email does not exist in the system.',
                 });
             }
 
-            if (!user.isActive) {
-                throw new HTTPError({
-                    status: 404,
-                    message: 'Inactive user',
-                });
-            }
+            // NOTE: wait for the conclusion
+            // if (!user.isActive) {
+            //     throw new HTTPError({
+            //         status: Status.HTTP_400_BAD_REQUEST,
+            //         message: 'Inactive user',
+            //     });
+            // }
 
             const passwordResetToken = await jwt.sign({
                 sub: email,
@@ -119,8 +121,9 @@ export const router = new Elysia({
 
             if (!user) {
                 throw new HTTPError({
-                    message: 'User not found',
                     status: Status.HTTP_404_NOT_FOUND,
+                    message:
+                        'The user with this email does not exist in the system.',
                 });
             }
 
