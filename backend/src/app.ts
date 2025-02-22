@@ -8,6 +8,10 @@ import { env } from '@/core/config';
 import { HTTPError } from '@/errors';
 import { logger } from '@/logging';
 import { limiter } from '@/rate-limiter';
+import { registerUlidFormat } from '@/format-registry';
+
+registerUlidFormat();
+
 
 export const app = new Elysia({ name: 'Yuuki' })
 

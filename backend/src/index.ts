@@ -1,8 +1,5 @@
 import { app } from '@/app';
 import { env } from '@/core/config';
-import { registerUlidFormat } from '@/format-registry';
-
-registerUlidFormat();
 
 app.listen(
     {
