@@ -25,6 +25,7 @@ export const router = new Elysia({
     tags: ['users'],
 })
     .use(dbSession)
+    .use(security)
     .guard((app) =>
         app
             // TODO: role or permission verification
@@ -79,7 +80,7 @@ export const router = new Elysia({
             )
             .post(
                 '/',
-                async ({ tx, set, body }) => {
+                async ({ tx, jwt, set, body }) => {
                     const user = await service.getUserByEmail(tx, body.email);
 
                     if (user) {
@@ -98,6 +99,18 @@ export const router = new Elysia({
                     });
 
                     await tx.$commit();
+
+                    const verifyEmailToken = await jwt.sign({
+                        sub: body.email,
+                    });
+                    const html = generateAccountVerificationEmail(
+                        body.email,
+                        verifyEmailToken,
+                    );
+                    setTimeout(async () => {
+                        await sendEmail(html);
+                    }, 1000);
+
                     set.status = 201;
                     return newUser;
                 },
@@ -257,7 +270,6 @@ export const router = new Elysia({
                 },
             ),
     )
-    .use(security)
     .post(
         '/signup',
         async ({ tx, jwt, set, body }) => {
@@ -279,22 +291,18 @@ export const router = new Elysia({
                 hashedPassword,
             });
 
+            await tx.$commit();
+
             const verifyEmailToken = await jwt.sign({
                 sub: email,
             });
-
-            console.log(verifyEmailToken);
-
             const html = generateAccountVerificationEmail(
                 email,
                 verifyEmailToken,
             );
-
             setTimeout(async () => {
                 await sendEmail(html);
             }, 1000);
-
-            await tx.$commit();
 
             set.status = 201;
             return { message: 'User created successfully' };
