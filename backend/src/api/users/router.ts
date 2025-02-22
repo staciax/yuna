@@ -1,5 +1,5 @@
 import { getCurrentUser } from '@/api/auth/plugins';
-import { getPasswordHash, verifyPassword } from '@/core/security';
+import { getPasswordHash, security, verifyPassword } from '@/core/security';
 import { HTTPError } from '@/errors';
 import { dbSession } from '@/plugins/db';
 import { Message } from '@/schemas/message';
@@ -17,6 +17,7 @@ import {
 } from './schemas';
 import * as service from './service';
 
+import { generateAccountVerificationEmail, sendEmail } from '@/utils';
 import { Elysia, t } from 'elysia';
 
 export const router = new Elysia({
@@ -24,6 +25,7 @@ export const router = new Elysia({
     tags: ['users'],
 })
     .use(dbSession)
+    .use(security)
     .guard((app) =>
         app
             // TODO: role or permission verification
@@ -78,7 +80,7 @@ export const router = new Elysia({
             )
             .post(
                 '/',
-                async ({ tx, set, body }) => {
+                async ({ tx, jwt, set, body }) => {
                     const user = await service.getUserByEmail(tx, body.email);
 
                     if (user) {
@@ -97,6 +99,18 @@ export const router = new Elysia({
                     });
 
                     await tx.$commit();
+
+                    const verifyEmailToken = await jwt.sign({
+                        sub: body.email,
+                    });
+                    const html = generateAccountVerificationEmail(
+                        body.email,
+                        verifyEmailToken,
+                    );
+                    setTimeout(async () => {
+                        await sendEmail(html);
+                    }, 1000);
+
                     set.status = 201;
                     return newUser;
                 },
@@ -258,7 +272,7 @@ export const router = new Elysia({
     )
     .post(
         '/signup',
-        async ({ tx, set, body }) => {
+        async ({ tx, jwt, set, body }) => {
             const { email, password } = body;
 
             const user = await service.getUserByEmail(tx, email);
@@ -279,6 +293,17 @@ export const router = new Elysia({
 
             await tx.$commit();
 
+            const verifyEmailToken = await jwt.sign({
+                sub: email,
+            });
+            const html = generateAccountVerificationEmail(
+                email,
+                verifyEmailToken,
+            );
+            setTimeout(async () => {
+                await sendEmail(html);
+            }, 1000);
+
             set.status = 201;
             return { message: 'User created successfully' };
         },
@@ -287,5 +312,47 @@ export const router = new Elysia({
             response: {
                 201: Message,
             },
+        },
+    )
+    .post(
+        '/verify-email',
+        async ({ tx, jwt, body }) => {
+            const tokenIsValid = await jwt.verify(body.token);
+
+            if (!tokenIsValid) {
+                throw new HTTPError({
+                    status: 400,
+                    message: 'Token is invalid',
+                });
+            }
+
+            const email = tokenIsValid.sub;
+
+            const user = await service.getUserByEmail(tx, email);
+
+            if (!user) {
+                throw new HTTPError({
+                    status: 404,
+                    message: 'User not found',
+                });
+            }
+
+            await service.updateUser(tx, user, {
+                isActive: true,
+            });
+
+            await tx.$commit();
+
+            return {
+                message: 'Verified email successfully',
+            };
+        },
+        {
+            response: {
+                200: Message,
+            },
+            body: t.Object({
+                token: t.String(),
+            }),
         },
     );

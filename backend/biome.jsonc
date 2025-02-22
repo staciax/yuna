@@ -8,7 +8,7 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "include": ["*.ts", "*.json"],
+        "include": ["*.ts", "*.tsx", "*.json"],
         "ignore": ["node_modules", "dist/**", "public"]
     },
     "formatter": {
@@ -74,5 +74,25 @@
         "formatter": {
             "trailingCommas": "none"
         }
-    }
+    },
+    "overrides": [
+        {
+            // for react + tailwindcss
+            "include": ["*.tsx"],
+            "linter": {
+                "rules": {
+                    "nursery": {
+                        "useSortedClasses": {
+                            "level": "warn",
+                            "fix": "safe",
+                            "options": {
+                                "attributes": ["className"],
+                                "functions": ["cn"]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
 }
