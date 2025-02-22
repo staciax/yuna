@@ -1,12 +1,10 @@
 // https://elysiajs.com/patterns/unit-test
 import { describe, expect, it } from 'bun:test';
-import { app } from '@/app';
+import { client } from './client';
 
 describe('Elysia', () => {
-    it('return a response', async () => {
-        const response = await app.handle(
-            new Request('http://localhost/health'),
-        );
+    it('health check', async () => {
+        const response = await client.get('/health');
         const text = await response.text();
 
         expect(text).toBe('true');
