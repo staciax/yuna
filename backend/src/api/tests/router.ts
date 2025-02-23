@@ -7,7 +7,7 @@ export const router = new Elysia({
     tags: ['tests'],
 }).get(
     '/test-email/:email_to',
-    async ({ query: { email_to: emailTo } }) => {
+    async ({ params: { email_to: emailTo } }) => {
         const emailData = generateTestEmail(emailTo);
         setTimeout(async () => {
             await sendEmail(emailData);
@@ -16,7 +16,7 @@ export const router = new Elysia({
         return { message: 'Email sent' };
     },
     {
-        query: t.Object({
+        params: t.Object({
             email_to: t.String({ format: 'email' }),
         }),
         response: {
