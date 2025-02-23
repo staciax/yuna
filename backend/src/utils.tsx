@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 import { EMAIL_ENABLED, env } from '@/core/config';
 import ResetPassword from '@/emails/reset-password';
+import TestEmail from '@/emails/test-email';
 import VerifyEmail from '@/emails/verify-email';
 
 // https://www.nodemailer.com/smtp/
@@ -61,6 +62,17 @@ export const sendEmail = async ({
 // export const renderEmailTemplate = ({ props }) => {};
 
 // TODO: email template localization
+
+export const generateTestEmail = (email: string): EmailPayload => {
+    const htmlContent = renderToStaticMarkup(
+        <TestEmail projectName={env.PROJECT_NAME} email={email} />,
+    );
+    return {
+        email_to: email,
+        subject: 'Test Email',
+        htmlContent: htmlContent,
+    };
+};
 
 export const generateResetPasswordEmail = (
     email: string,
