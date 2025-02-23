@@ -1,9 +1,10 @@
+import { Elysia } from 'elysia';
+
 import { Message } from '@/schemas/message';
 
 import { router as authRouter } from './auth/router';
+import { router as testsRouter } from './tests/router';
 import { router as usersRouter } from './users/router';
-
-import { Elysia } from 'elysia';
 
 // https://elysiajs.com/essential/plugin.html#plugin-deduplication
 
@@ -24,4 +25,5 @@ export const apiRouter = <T extends string>(config: { prefix: T }) =>
             },
         })
         .use(usersRouter)
-        .use(authRouter);
+        .use(authRouter)
+        .use(testsRouter);
