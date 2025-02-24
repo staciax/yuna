@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia';
 
 import * as userService from '@/api/users/service';
+import { BackgroundTasksPlugin } from '@/background-tasks';
 import { getPasswordHash, security } from '@/core/security';
 import { Status } from '@/enums';
 import { HTTPError } from '@/errors';
@@ -18,6 +19,7 @@ export const router = new Elysia({
 })
     .use(security)
     .use(dbSession)
+    .use(BackgroundTasksPlugin)
     .post(
         '/login',
         async ({ tx, body, jwt, cookie: { auth } }) => {
@@ -60,7 +62,7 @@ export const router = new Elysia({
     )
     .post(
         '/password-recovery/:email',
-        async ({ tx, jwt, params: { email } }) => {
+        async ({ params: { email }, tx, jwt, backgroundTasks }) => {
             const user = await userService.getUserByEmail(tx, email);
 
             if (!user) {
@@ -90,10 +92,7 @@ export const router = new Elysia({
                     passwordResetToken,
                 );
 
-                // NOTE: send email after api response 1 sec
-                setTimeout(async () => {
-                    await sendEmail(emailData);
-                }, 1000);
+                backgroundTasks.addTask(sendEmail, emailData);
             }
 
             return {

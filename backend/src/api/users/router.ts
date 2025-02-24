@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia';
 
 import { getCurrentUser } from '@/api/auth/plugins';
+import { BackgroundTasksPlugin } from '@/background-tasks';
 import { EMAIL_ENABLED } from '@/core/config';
 import { getPasswordHash, security, verifyPassword } from '@/core/security';
 import { Status } from '@/enums';
@@ -28,6 +29,8 @@ export const router = new Elysia({
 })
     .use(dbSession)
     .use(security)
+    .use(BackgroundTasksPlugin)
+
     .guard((app) =>
         app
             // TODO: role or permission verification
@@ -82,7 +85,7 @@ export const router = new Elysia({
             )
             .post(
                 '/',
-                async ({ tx, jwt, set, body }) => {
+                async ({ tx, jwt, set, body, backgroundTasks }) => {
                     const user = await service.getUserByEmail(tx, body.email);
 
                     if (user) {
@@ -108,9 +111,7 @@ export const router = new Elysia({
                             data.email,
                             verifyEmailToken,
                         );
-                        setTimeout(async () => {
-                            await sendEmail(emailData);
-                        }, 1000);
+                        backgroundTasks.addTask(sendEmail, emailData);
                     }
 
                     set.status = Status.HTTP_201_CREATED;
@@ -268,7 +269,7 @@ export const router = new Elysia({
     )
     .post(
         '/signup',
-        async ({ tx, jwt, set, body }) => {
+        async ({ tx, jwt, set, body, backgroundTasks }) => {
             const { email, password } = body;
 
             const user = await service.getUserByEmail(tx, email);
@@ -295,9 +296,7 @@ export const router = new Elysia({
                     email,
                     verifyEmailToken,
                 );
-                setTimeout(async () => {
-                    await sendEmail(emailData);
-                }, 1000);
+                backgroundTasks.addTask(sendEmail, emailData);
             }
 
             set.status = Status.HTTP_201_CREATED;
