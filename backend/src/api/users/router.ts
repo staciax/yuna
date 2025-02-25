@@ -86,9 +86,12 @@ export const router = new Elysia({
             .post(
                 '/',
                 async ({ tx, jwt, set, body, backgroundTasks }) => {
-                    const user = await service.getUserByEmail(tx, body.email);
+                    const existingUser = await service.getUserByEmail(
+                        tx,
+                        body.email,
+                    );
 
-                    if (user) {
+                    if (existingUser) {
                         throw new HTTPError({
                             status: Status.HTTP_400_BAD_REQUEST,
                             message: 'Email already exists',
@@ -127,9 +130,9 @@ export const router = new Elysia({
             .patch(
                 '/:id',
                 async ({ tx, params: { id }, body }) => {
-                    const updateUser = await service.getUser(tx, id);
+                    const user = await service.getUser(tx, id);
 
-                    if (!updateUser) {
+                    if (!user) {
                         throw new HTTPError({
                             status: Status.HTTP_404_NOT_FOUND,
                             message: 'User not found',
@@ -143,14 +146,10 @@ export const router = new Elysia({
                         hashedPassword = await getPasswordHash(password);
                     }
 
-                    const updatedUser = await service.updateUser(
-                        tx,
-                        updateUser,
-                        {
-                            ...data,
-                            hashedPassword,
-                        },
-                    );
+                    const updatedUser = await service.updateUser(tx, user, {
+                        ...data,
+                        hashedPassword,
+                    });
 
                     return updatedUser;
                 },
@@ -167,23 +166,23 @@ export const router = new Elysia({
             .delete(
                 '/:id',
                 async ({ currentUser, tx, params: { id } }) => {
-                    const deleteUser = await service.getUser(tx, id);
+                    const user = await service.getUser(tx, id);
 
-                    if (!deleteUser) {
+                    if (!user) {
                         throw new HTTPError({
                             status: Status.HTTP_404_NOT_FOUND,
                             message: 'User not found',
                         });
                     }
 
-                    if (deleteUser.id === currentUser.id) {
+                    if (user.id === currentUser.id) {
                         throw new HTTPError({
                             status: Status.HTTP_403_FORBIDDEN,
                             message: "You can't delete yourself",
                         });
                     }
 
-                    await service.softDeleteUser(tx, deleteUser);
+                    await service.softDeleteUser(tx, user);
 
                     return { message: 'User deleted successfully' };
                 },
