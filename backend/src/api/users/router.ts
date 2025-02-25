@@ -288,12 +288,12 @@ export const router = new Elysia({
             });
 
             if (EMAIL_ENABLED && email) {
-                const verifyEmailToken = await jwt.sign({
+                const emailVerificationToken = await jwt.sign({
                     sub: email,
                 });
                 const emailData = generateAccountVerificationEmail(
                     email,
-                    verifyEmailToken,
+                    emailVerificationToken,
                 );
                 backgroundTasks.addTask(sendEmail, emailData);
             }
