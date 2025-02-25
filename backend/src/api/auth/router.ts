@@ -9,7 +9,6 @@ import { dbSession } from '@/plugins/db';
 import { Message } from '@/schemas/message';
 import { generateResetPasswordEmail, sendEmail } from '@/utils';
 
-import { EMAIL_ENABLED } from '@/core/config';
 import { NewPassword, UserLogin } from './schemas';
 import * as service from './service';
 
@@ -86,14 +85,12 @@ export const router = new Elysia({
                 // TODO: add nbf
             });
 
-            if (EMAIL_ENABLED && email) {
-                const emailData = generateResetPasswordEmail(
-                    email,
-                    passwordResetToken,
-                );
+            const emailData = generateResetPasswordEmail(
+                email,
+                passwordResetToken,
+            );
 
-                backgroundTasks.addTask(sendEmail, emailData);
-            }
+            backgroundTasks.addTask(sendEmail, emailData);
 
             return {
                 message: 'Password recovery email sent.',
