@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
 
 import { getCurrentUser } from '@/api/auth/plugins';
-import { BackgroundTasksPlugin } from '@/background-tasks';
+import { backgroundTasksPlugin } from '@/background-tasks';
 import { EMAIL_ENABLED } from '@/core/config';
 import { getPasswordHash, security, verifyPassword } from '@/core/security';
 import { Status } from '@/enums';
@@ -29,7 +29,7 @@ export const router = new Elysia({
 })
     .use(dbSession)
     .use(security)
-    .use(BackgroundTasksPlugin)
+    .use(backgroundTasksPlugin)
 
     .guard((app) =>
         app

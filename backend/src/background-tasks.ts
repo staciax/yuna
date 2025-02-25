@@ -70,7 +70,7 @@ export class BackgroundTasks implements IBackgroundTask {
     }
 }
 
-export const BackgroundTasksPlugin = new Elysia({ name: 'background-tasks' })
+export const backgroundTasksPlugin = new Elysia({ name: 'background-tasks' })
     .derive(() => ({
         backgroundTasks: new BackgroundTasks(),
     }))

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'bun:test';
 
 import { Elysia } from 'elysia';
 
-import { BackgroundTasksPlugin } from '@/background-tasks';
+import { backgroundTasksPlugin } from '@/background-tasks';
 
 import { get } from './utils/utils';
 
@@ -15,7 +15,7 @@ describe('BackgroundTasks', () => {
         };
 
         const app = new Elysia()
-            .use(BackgroundTasksPlugin)
+            .use(backgroundTasksPlugin)
             .get('/', ({ backgroundTasks }) => {
                 backgroundTasks.addTask(async_task);
                 return 'task initiated';
@@ -61,7 +61,7 @@ describe('BackgroundTasks', () => {
         };
 
         const app = new Elysia()
-            .use(BackgroundTasksPlugin)
+            .use(backgroundTasksPlugin)
             .get('/', ({ backgroundTasks }) => {
                 backgroundTasks.addTask(increment, 1);
                 backgroundTasks.addTask(increment, 2);
@@ -93,7 +93,7 @@ describe('BackgroundTasks', () => {
         };
 
         const app = new Elysia()
-            .use(BackgroundTasksPlugin)
+            .use(backgroundTasksPlugin)
             .get('/', ({ backgroundTasks }) => {
                 backgroundTasks.addTask(increment);
                 backgroundTasks.addTask(increment);

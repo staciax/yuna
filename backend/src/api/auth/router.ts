@@ -1,7 +1,7 @@
 import { Elysia, t } from 'elysia';
 
 import * as userService from '@/api/users/service';
-import { BackgroundTasksPlugin } from '@/background-tasks';
+import { backgroundTasksPlugin } from '@/background-tasks';
 import { getPasswordHash, security } from '@/core/security';
 import { Status } from '@/enums';
 import { HTTPError } from '@/errors';
@@ -18,7 +18,7 @@ export const router = new Elysia({
 })
     .use(security)
     .use(dbSession)
-    .use(BackgroundTasksPlugin)
+    .use(backgroundTasksPlugin)
     .post(
         '/login',
         async ({ tx, body, jwt, cookie: { auth } }) => {
