@@ -111,16 +111,16 @@ export const router = new Elysia({
     .post(
         '/reset-password',
         async ({ tx, jwt, body }) => {
-            const tokenIsValid = await jwt.verify(body.token);
+            const isTokenValid = await jwt.verify(body.token);
 
-            if (!tokenIsValid) {
+            if (!isTokenValid) {
                 throw new HTTPError({
                     status: Status.HTTP_400_BAD_REQUEST,
                     message: 'Invalid token',
                 });
             }
 
-            const email = tokenIsValid.sub;
+            const email = isTokenValid.sub;
 
             const user = await userService.getUserByEmail(tx, email);
 
