@@ -1,5 +1,29 @@
-import { Value } from '@sinclair/typebox/value';
-import { t } from 'elysia';
+import type { StaticDecode } from '@sinclair/typebox';
+import { TransformDecodeCheckError, Value } from '@sinclair/typebox/value';
+import { type TSchema, t } from 'elysia';
+
+// A Simple Environment Variable Parser
+
+function parseEnv<T extends TSchema>(
+    schema: T,
+    env: Record<string, string | undefined> = process.env,
+): StaticDecode<T> {
+    const value = Value.Clone(env);
+    const cleaned = Value.Clean(schema, value);
+    const defaulted = Value.Default(schema, cleaned);
+    const converted = Value.Convert(schema, defaulted);
+    try {
+        return Value.Decode(schema, converted);
+    } catch (err) {
+        console.error('Invalid environment variables, check the errors below!');
+        if (err instanceof TransformDecodeCheckError) {
+            console.log([...Value.Errors(schema, converted)]);
+        }
+        throw err;
+    }
+}
+
+//
 
 const parseCorsOrigins = (value: string) => {
     return value.split(',').map((v) => v.trim().replace(/\/$/, ''));
@@ -119,15 +143,7 @@ const envSchema = t.Object({
 
 export type Environment = typeof envSchema.static;
 
-export const env: Environment = Value.Parse(envSchema, process.env);
-
-const error = Value.Errors(envSchema, env);
-
-if (error.First()) {
-    console.error('Invalid environment variables, check the errors below!');
-    console.error([...error]);
-    process.exit(1);
-}
+export const env: Environment = parseEnv(envSchema, process.env);
 
 if (env.SMTP_SSL && env.SMTP_TLS) {
     console.error(
