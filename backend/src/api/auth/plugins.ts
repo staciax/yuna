@@ -8,6 +8,11 @@ import { dbSession } from '@/plugins/db';
 // TODO: role check
 
 export const getCurrentUser = new Elysia({ name: 'current-user' })
+    .guard({
+        cookie: t.Cookie({
+            auth: t.String(),
+        }),
+    })
     .use(dbSession)
     .use(security)
     .derive(async ({ jwt, cookie: { auth }, tx }) => {
