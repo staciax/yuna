@@ -29,14 +29,14 @@ bun dev
     - [x] [Elysia JWT](https://elysiajs.com/plugins/jwt.html)
     - [ ] with [Refresh Token](https://auth0.com/learn/refresh-tokens)
 - [x] Hashing Password with bcrypt ([Bun Hashing](https://bun.sh/docs/api/hashing))
-- Passkey (passwordless)
+- [ ] Passkey (passwordless)
 - [x] [Environment Variables Validation](./src/core/config.ts)
 - [ ] Static files
-    - [ ] [Elysia Static](https://elysiajs.com/plugins/static.html)
+    - [x] [Elysia Static](https://elysiajs.com/plugins/static.html)
     - [ ] S3 storage with [Bun S3](https://bun.sh/docs/api/s3)
         - [ ] [AWS S3](https://aws.amazon.com/s3/)
-        - [ ] [Cloudflare R2](https://developers.cloudflare.com/r2/)
-- [ ] [React Email](https://github.com/resend/react-email) with [Nodemailer](https://www.nodemailer.com) ([Elysia Email](https://elysiajs.com/recipe/react-email.html))
+        - [x] [Cloudflare R2](https://developers.cloudflare.com/r2/)
+- [x] [React Email](https://github.com/resend/react-email) with [Nodemailer](https://www.nodemailer.com) ([Elysia Email](https://elysiajs.com/recipe/react-email.html))
 - [x] [Docker](https://www.docker.com) and [Docker Compose](https://docs.docker.com/compose) ([Elysia Docker](https://elysiajs.com/recipe/docker.html))
 - [ ] [Unit Test](https://elysiajs.com/patterns/unit-test) and coverage with [Bun Code coverage](https://bun.sh/docs/test/coverage)
 - [ ] [Redis](https://redis.io)
@@ -55,7 +55,7 @@ bun dev
     - [ ] [Cloudflare Workers](https://workers.cloudflare.com)
     - [ ] [Traefik](https://traefik.io)
 - [ ] Rate Limiting (maybe: [rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
-<!-- - [ ] Monorepo with [Turbo](https://turbo.build/repo/docs) -->
 - [ ] Microservices
 - [ ] RabbitMQ
+<!-- - [ ] Monorepo with [Turbo](https://turbo.build/repo/docs) -->
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
