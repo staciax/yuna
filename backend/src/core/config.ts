@@ -139,6 +139,27 @@ const envSchema = t.Object({
         default: 24,
         description: 'Email reset token expiration time in hours',
     }),
+
+    // S3 Storage Object
+    S3_BUCKET: t.String(),
+    S3_ACCESS_KEY_ID: t.String(),
+    S3_SECRET_ACCESS_KEY: t.String(),
+    S3_ENDPOINT: t.Optional(t.String()),
+    S3_REGION: t.Optional(t.String()),
+    S3_SESSION_TOKEN: t.Optional(t.String()),
+    S3_VIRTUAL_HOSTED_STYLE: t.Optional(t.Boolean({ default: false })),
+    S3_ACL: t.Optional(
+        t.Union([
+            t.Literal('private'),
+            t.Literal('public-read'),
+            t.Literal('public-read-write'),
+            t.Literal('authenticated-read'),
+            t.Literal('aws-exec-read'),
+            t.Literal('bucket-owner-read'),
+            t.Literal('bucket-owner-full-control'),
+            t.Literal('log-delivery-write'),
+        ]),
+    ),
 });
 
 export type Environment = typeof envSchema.static;
