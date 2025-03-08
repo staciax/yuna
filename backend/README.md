@@ -29,6 +29,7 @@ bun dev
     - [x] [Elysia JWT](https://elysiajs.com/plugins/jwt.html)
     - [ ] with [Refresh Token](https://auth0.com/learn/refresh-tokens)
 - [x] Hashing Password with bcrypt ([Bun Hashing](https://bun.sh/docs/api/hashing))
+- Passkey (passwordless)
 - [x] [Environment Variables Validation](./src/core/config.ts)
 - [ ] Static files
     - [ ] [Elysia Static](https://elysiajs.com/plugins/static.html)
@@ -56,4 +57,5 @@ bun dev
 - [ ] Rate Limiting (maybe: [rayriffy/elysia-rate-limit](https://github.com/rayriffy/elysia-rate-limit))
 <!-- - [ ] Monorepo with [Turbo](https://turbo.build/repo/docs) -->
 - [ ] Microservices
+- [ ] RabbitMQ
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
