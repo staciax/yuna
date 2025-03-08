@@ -63,7 +63,7 @@ if (env.BACKEND_CORS_ORIGINS) {
         cors({
             origin: env.BACKEND_CORS_ORIGINS,
             credentials: true,
-            methods: ['*'],
+            methods: '*',
             allowedHeaders: true,
         }),
     );
