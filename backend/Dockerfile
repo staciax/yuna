@@ -1,4 +1,4 @@
-ARG BUN_VERSION=1.2.2
+ARG BUN_VERSION=1.2.5
 
 FROM oven/bun:${BUN_VERSION} AS base
 
@@ -27,7 +27,7 @@ RUN bun prisma generate
 
 ENV NODE_ENV=production
 
-# https://elysiajs.com/patterns/deployment.html#why-not-minify 
+# https://elysiajs.com/patterns/deployment.html#why-not-minify
 RUN bun build \
     --compile \
     --minify-whitespace \

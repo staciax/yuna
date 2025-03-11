@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- [Bun](https://bun.sh) 1.2.2+
+- [Bun](https://bun.sh) 1.2.5+
 
 ## Configuration
 
