@@ -48,16 +48,12 @@ if (env.NODE_ENV === 'development') {
     }
 
     // @ts-ignore
-    prisma.$on('query', (e) => {
+    prisma.$on('query', (e: Prisma.QueryEvent) => {
         console.log(
-            // @ts-ignore
             `Query: \n${green} ${format(e.query, { language: 'postgresql' })} ${reset}`,
         );
-        // @ts-ignore
         console.log(`Params: ${yellow}${e.params}${reset}`);
-        // @ts-ignore
         console.log(`Duration: ${cyan}${e.duration}${reset} ms`);
-        // @ts-ignore
         console.log(`Timestamp: ${blue}${e.timestamp}${reset}\n`);
     });
 }
