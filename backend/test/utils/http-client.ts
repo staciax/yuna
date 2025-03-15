@@ -70,14 +70,14 @@ export class Client extends BaseClient {
 export type RequestHandler = (request: Request) => Promise<Response>;
 
 export class TestClient extends Client {
-    private readonly handle: RequestHandler;
+    private readonly handler: RequestHandler;
 
-    constructor(handle: RequestHandler, baseUrl = 'http://localhost') {
+    constructor(handler: RequestHandler, baseUrl = 'http://localhost') {
         super(baseUrl);
-        this.handle = handle;
+        this.handler = handler;
     }
 
     override handleRequest(request: Request) {
-        return this.handle(request);
+        return this.handler(request);
     }
 }
