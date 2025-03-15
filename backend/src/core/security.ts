@@ -3,7 +3,7 @@ import { t } from 'elysia';
 
 import { env } from '@/core/config';
 
-const ALGORITHM = 'HS256';
+export const ALGORITHM = 'HS256';
 
 export const security = jwt({
     name: 'jwt',
