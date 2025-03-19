@@ -59,3 +59,7 @@ bun dev
 - [ ] RabbitMQ
 <!-- - [ ] Monorepo with [Turbo](https://turbo.build/repo/docs) -->
 <!-- - [ ] Architecture (Clean Architecture, Hexagonal Architecture) -->
+
+## License
+
+This project is licensed under the GNUv3 License - see the [LICENSE](LICENSE.md) file for details.
