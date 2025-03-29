@@ -26,7 +26,8 @@ export async function verifyPassword(
 
 export async function getPasswordHash(password: string) {
     return await Bun.password.hash(password, {
-        algorithm: 'bcrypt',
-        cost: 10,
+        algorithm: 'argon2id',
+        memoryCost: 128 * 1024, // 128MB
+        timeCost: 4,
     });
 }
