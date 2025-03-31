@@ -1,4 +1,4 @@
-ARG BUN_VERSION=1.2.7
+ARG BUN_VERSION=1.2.8
 
 FROM oven/bun:${BUN_VERSION} AS base
 
