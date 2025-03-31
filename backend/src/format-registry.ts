@@ -1,7 +1,7 @@
 import { FormatRegistry } from '@sinclair/typebox';
 
-// https://github.com/colinhacks/zod/blob/e376cda8e14d3caa09bc2148ffc668748118db6b/src/types.ts#L638
-const ulidRegex = /^[0-9A-HJKMNP-TV-Z]{26}$/i;
+// https://github.com/ulid/javascript/blob/361eb27b5595c766b85af147df38e3e61eebb529/source/constants.ts#L11C27-L11C72
+const ulidRegex = /^[0-7][0-9a-hjkmnp-tv-zA-HJKMNP-TV-Z]{25}$/;
 
 export const registerUlidFormat = () => {
     if (!FormatRegistry.Has('ulid'))
