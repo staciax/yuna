@@ -21,7 +21,7 @@ export async function verifyPassword(
     plainPassword: string,
     hashedPassword: string,
 ) {
-    return await Bun.password.verify(plainPassword, hashedPassword, 'bcrypt');
+    return await Bun.password.verify(plainPassword, hashedPassword, 'argon2d');
 }
 
 export async function getPasswordHash(password: string) {
