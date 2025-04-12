@@ -45,7 +45,7 @@ WORKDIR /app
 COPY --from=busybox:stable --chown=nonroot:nonroot /bin/wget /usr/bin/wget
 
 COPY --from=builder --chown=nonroot:nonroot /app/server ./server
-COPY --from=builder --chown=nonroot:nonroot /app/node_modules/.prisma /app/node_modules/.prisma
+COPY --from=builder --chown=nonroot:nonroot /app/src/generated/prisma ./src/generated/prisma
 
 COPY --chown=nonroot:nonroot public public
 # COPY --chown=nonroot:nonroot protected protected
