@@ -1,5 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
-// import { Prisma, PrismaClient } from '@/generated/client';
+import { Prisma, PrismaClient } from '@/generated/prisma/client';
 
 import { env } from '@/core/config';
 
