@@ -15,7 +15,6 @@
         "**/src/generated/prisma/**": true
     },
 
-
     // BiomeJS
     "biome.lspBin": "./node_modules/@biomejs/biome/bin/biome",
 
