@@ -9,3 +9,6 @@ server
 # misc
 .DS_Store
 .env
+
+# prisma generated
+/src/generated/prisma
