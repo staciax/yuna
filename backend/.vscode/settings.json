@@ -4,6 +4,17 @@
         "**/src/**/{schemas}/**/*.ts": "${dirname} - ${filename}.ts",
         "**/src/api/**/*.ts": "${dirname} - ${filename}.ts"
     },
+    "files.readonlyInclude": {
+        "**/prisma/migrations/**": true,
+        "**/src/generated/prisma/**": true
+    },
+    "files.watcherExclude": {
+        "**/src/generated/prisma/**": true
+    },
+    "search.exclude": {
+        "**/src/generated/prisma/**": true
+    },
+
 
     // BiomeJS
     "biome.lspBin": "./node_modules/@biomejs/biome/bin/biome",
