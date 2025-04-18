@@ -2,9 +2,9 @@ ARG BUN_VERSION=1.2.10
 
 FROM oven/bun:${BUN_VERSION} AS base
 
-# manually install openssl because bun image (debian) does not include it by default
-# and it is required by prisma
-# reference: https://www.prisma.io/docs/orm/reference/system-requirements#linux-runtime-dependencies
+# Install OpenSSL manually: Bun image (Debian-based) doesn't include it by default,
+# but Prisma requires it as a runtime dependency.
+# See: https://www.prisma.io/docs/orm/reference/system-requirements#linux-runtime-dependencies
 RUN apt-get update -y && apt-get install -y --no-install-recommends  \
     openssl \
     && rm -rf /var/lib/apt/lists/*
