@@ -1,4 +1,4 @@
-ARG BUN_VERSION=1.2.10
+ARG BUN_VERSION=1.2.10-alpine
 
 FROM oven/bun:${BUN_VERSION} AS base
 
@@ -6,18 +6,8 @@ FROM base AS deps
 
 WORKDIR /tmp
 
+COPY prisma prisma
 COPY package.json .
 COPY bun.lock .
 
-RUN bun install --frozen-lockfile
-
-FROM gcr.io/distroless/nodejs22-debian12 AS prestart
-
-WORKDIR /tmp
-
-COPY --from=deps /tmp/node_modules/prisma ./node_modules/prisma
-COPY --from=deps /tmp/node_modules/@prisma ./node_modules/@prisma
-
-COPY prisma prisma
-
-CMD [ "./node_modules/prisma/build/index.js", "migrate", "deploy" ]
+CMD ["bunx", "prisma", "migrate", "deploy"]
