@@ -2,6 +2,11 @@ ARG BUN_VERSION=1.2.10
 
 FROM oven/bun:${BUN_VERSION} AS base
 
+# prisma required openssl
+RUN apt-get update -y && apt-get install -y --no-install-recommends  \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
+
 FROM base AS deps
 
 WORKDIR /app
@@ -10,7 +15,6 @@ COPY package.json .
 COPY bun.lock .
 
 RUN bun install --production --frozen-lockfile
-RUN bun install prisma --frozen-lockfile
 
 FROM base AS builder
 
@@ -23,7 +27,7 @@ COPY package.json .
 COPY tsconfig.json .
 COPY prisma prisma
 
-RUN bun prisma generate
+RUN bunx prisma generate
 
 ENV NODE_ENV=production
 
