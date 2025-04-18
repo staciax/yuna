@@ -15,6 +15,9 @@
         "**/src/generated/prisma/**": true
     },
 
+    // Typescript settings
+    "typescript.referencesCodeLens.enabled": true,
+
     // BiomeJS
     "biome.lspBin": "./node_modules/@biomejs/biome/bin/biome",
 
