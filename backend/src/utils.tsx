@@ -115,3 +115,7 @@ export const generateAccountVerificationEmail = (
 // TODO: email template
 // TODO: user email verification
 // TODO: user password reset
+
+export const pascalCaseToSnakeCase = (input: string) => {
+    return input.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+};

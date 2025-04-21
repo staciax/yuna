@@ -1,6 +1,7 @@
 import cors from '@elysiajs/cors';
 import staticPlugin from '@elysiajs/static';
 import swagger from '@elysiajs/swagger';
+import { ValueErrorType } from '@sinclair/typebox/value';
 import { Elysia } from 'elysia';
 
 import { apiRouter } from '@/api';
@@ -9,6 +10,8 @@ import { HTTPError } from '@/errors';
 import { registerUlidFormat } from '@/format-registry';
 import { logger } from '@/logging';
 import { limiter } from '@/rate-limiter';
+import { ValidationErrorSchema } from '@/schemas/errors';
+import { pascalCaseToSnakeCase } from '@/utils';
 
 registerUlidFormat();
 
@@ -21,6 +24,7 @@ export const app = new Elysia({ name: 'Yuuki' })
     .use(limiter)
 
     // Error handlers
+
     .error({ HTTPError })
     .onError(({ code, error, set }) => {
         if (code === 'HTTPError') {
@@ -33,6 +37,27 @@ export const app = new Elysia({ name: 'Yuuki' })
             }
             return { message: error.detail };
         }
+        if (code === 'VALIDATION') {
+            const errors = error.all.map((e) =>
+                e.summary
+                    ? {
+                          type: pascalCaseToSnakeCase(ValueErrorType[e.type]),
+                          path: e.path.substring(1).split('/'),
+                          message: e.message,
+                      }
+                    : undefined,
+            );
+            return {
+                type: 'validation',
+                on: error.type,
+                errors: errors.filter((e) => e),
+            };
+        }
+    })
+    .guard({
+        response: {
+            422: ValidationErrorSchema,
+        },
     })
 
     // Static files
