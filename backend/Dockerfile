@@ -5,6 +5,7 @@ FROM oven/bun:${BUN_VERSION} AS base
 # Install OpenSSL manually: Bun image (Debian-based) doesn't include it by default,
 # but Prisma requires it as a runtime dependency.
 # See: https://www.prisma.io/docs/orm/reference/system-requirements#linux-runtime-dependencies
+# https://www.prisma.io/docs/guides/docker#31-option-2-use-linux-debian-nodeslim-as-a-base-image
 RUN apt-get update -y && apt-get install -y --no-install-recommends  \
     openssl \
     && rm -rf /var/lib/apt/lists/*
