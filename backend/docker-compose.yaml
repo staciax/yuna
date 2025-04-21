@@ -84,3 +84,7 @@ networks:
 
 volumes:
   app-db-data:
+
+# NOTE: Performance issue - Prisma queries running very slow in containerized environments.
+# Could be due to building AMD64 image on macOS ARM64.
+# Need to test on native AMD64 to confirm.
