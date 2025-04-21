@@ -5,7 +5,7 @@ import { Pagination } from '@/schemas/pagination';
 export const UserRead = t.Object({
     id: t.String({ format: 'uuid' }),
     email: t.String({ format: 'email' }),
-    // emailVerified: t.Boolean(),
+    emailVerified: t.Boolean(),
     firstName: t.Nullable(t.String()),
     lastName: t.Nullable(t.String()),
     // role: t.Integer(),
