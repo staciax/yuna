@@ -36,7 +36,7 @@ import { t } from 'elysia';
 
 const ValidationErrorDetails = t.Object({
     type: t.String(),
-    path: t.String(),
+    path: t.Array(t.String()),
     message: t.String(),
 });
 
