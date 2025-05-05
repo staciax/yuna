@@ -16,4 +16,4 @@ export const logger = new Elysia() //
             },
         }),
     )
-    .as('plugin');
+    .as('scoped');

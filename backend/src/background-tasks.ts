@@ -81,4 +81,4 @@ export const backgroundTasksPlugin = new Elysia({ name: 'background-tasks' })
             console.error(`elysia-background-tasks: ${now} - ${error}`);
         });
     })
-    .as('plugin');
+    .as('scoped');

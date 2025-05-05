@@ -21,7 +21,7 @@ export const s3Plugin = <const Name extends string = 's3'>({
         seed: { name, ...options },
     }) //
         .decorate(name as Name extends string ? Name : 's3', s3Client)
-        .as('plugin');
+        .as('scoped');
 };
 
 // usage

@@ -10,4 +10,4 @@ export const dbSession = new Elysia({ name: 'db-session' })
     .onAfterResponse(async ({ tx }) => {
         await tx.$rollback();
     })
-    .as('plugin');
+    .as('scoped');
